@@ -17,7 +17,17 @@ public class Image extends JPanel{
 	}
 	
 	public Image () {
+		super();
 		image = null;
+	}
+
+	public BufferedImage getImage() {
+		return image;
+	}
+	
+	public void setImage(BufferedImage img) {
+		image = img;
+		this.repaint();
 	}
 	
 	public void setImage(String path) {

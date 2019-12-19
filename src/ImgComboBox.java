@@ -7,6 +7,5 @@ public class ImgComboBox extends JComboBox{
 	
 	public ImgComboBox() {
 		super(optionList);
-		this.addMouseListener(new ImgListener());
 	}
 }

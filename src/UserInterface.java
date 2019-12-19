@@ -19,7 +19,6 @@ public class UserInterface implements Runnable{
 	@Override
 	public void run() {
 		frame = new JFrame("Image editor");
-		//frame.setPreferredSize(new Dimension(500, 300));
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		createComponents(frame.getContentPane());
 		
@@ -32,13 +31,12 @@ public class UserInterface implements Runnable{
 		ImgComboBox comboBox = new ImgComboBox();
 		container.add(comboBox, BorderLayout.WEST);
 
-		JButton button = new JButton("Import image");
-		//button.addActionListener(new Listener(label));
-		container.add(button, BorderLayout.EAST);
-		
 		Image img = new Image("nature1.jpeg");
 		container.add(img, BorderLayout.NORTH);
-		img.repaint();
+
+		JButton button = new JButton("Manipulate image");
+		button.addActionListener(new ButtonCBListener(comboBox, img));
+		container.add(button, BorderLayout.EAST);
 	}
 
 }

@@ -11,14 +11,6 @@ public class FinalTask {
 	public static void main(String[] args) {
 		UserInterface ui = new UserInterface();
 		SwingUtilities.invokeLater(ui);
-	
-		String content = "";
-		try {
-			content = new String(Files.readAllBytes(Paths.get("text.txt")), "UTF-8");
-		} catch (IOException e) {
-			
-		}
-		System.out.println(content);
 	}
 
 }
