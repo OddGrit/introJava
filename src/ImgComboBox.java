@@ -1,9 +1,6 @@
 import javax.swing.JComboBox;
 
 public class ImgComboBox extends JComboBox<String>{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	private final static String[] optionList = {"Invert", "Crop", "Double", "Half"};

@@ -1,7 +1,7 @@
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -12,9 +12,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.JFrame;
 
 public class ImagePanel extends JPanel{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	private BufferedImage image;
@@ -60,21 +57,17 @@ public class ImagePanel extends JPanel{
 	}
 	
 	public void resize(double factor) {
-		BufferedImage img = image;
-		Dimension d = getSize();
-		
-		setImage(new BufferedImage((int)(d.getWidth() * factor), (int)(d.getHeight() * factor), BufferedImage.TYPE_INT_ARGB));
-		setSize((int)(d.getWidth() * factor), (int)(d.getHeight() * factor));
-		
-		//Converting from Image to BufferedImage
-		Graphics2D g2d = image.createGraphics();
-		g2d.drawImage(img.getScaledInstance((int)(d.getWidth() * factor), (int)(d.getHeight() * factor), 
-				Image.SCALE_SMOOTH), 0, 0, null);
-		g2d.dispose();
-		//Updating the frame size
-		JFrame f = (JFrame)SwingUtilities.getRoot(this);
-		f.pack();
-	}
+		Dimension d = new Dimension(image.getWidth(), image.getHeight());
+
+		BufferedImage after = new BufferedImage((int)(d.getWidth()*factor), (int)(d.getHeight()*factor), 
+				BufferedImage.TYPE_INT_ARGB);
+		AffineTransform at = new AffineTransform();
+		at.scale(factor, factor);
+		AffineTransformOp scaleOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+		after = scaleOp.filter(image, after);
+		this.setSize(after.getWidth(), after.getHeight());
+		image = after;
+		}
 	
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -91,5 +84,10 @@ public class ImagePanel extends JPanel{
 	@Override
 	public Dimension getPreferredSize() {
 		return image == null ? new Dimension(0, 0) : new Dimension(image.getWidth(), image.getHeight());
+	}
+	
+	@Override
+	public Dimension getMinimumSize() {
+		return new Dimension(0, 0);
 	}
 }

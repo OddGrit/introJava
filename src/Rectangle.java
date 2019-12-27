@@ -3,9 +3,6 @@ import java.awt.Graphics;
 import javax.swing.JComponent;
 
 public class Rectangle extends JComponent {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	public int x;
